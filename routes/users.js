@@ -26,13 +26,12 @@ module.exports = (app) => {
     });
 
     //buscaPeloNome
-    app.get('/users/:name', (req, res) => {
+    app.get('/users/:key', (req, res) => {
 
-        //BUSCA SIMPLES retorna o primeiro set q encontrar
-        //db.find({$where: doc => doc.name.includes(req.params.name)}, (error, docs) 
-        let regex = new RegExp(req.params.name);
+        //BUSCA pode ser pelo id do user ou pelo name;
+        let regex = new RegExp(req.params.key);
 
-        db.find({name: regex}, (error, docs) => {
+        db.find({$or: [{_id: req.params.key}, {name: regex}]}, (error, docs) => {
             
             if(error) {
                 
