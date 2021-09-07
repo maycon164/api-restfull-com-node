@@ -1,11 +1,11 @@
 
 module.exports = (app) => {
 
-app.get('/', (req, res) => {
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html');
-    res.end('<h1> OLA COMO VAI VOCE? ...Ronaldo? </h1>');
+    app.get('/', (req, res) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/html');
+        res.end('<h1> OLA COMO VAI VOCE? ...Ronaldo? </h1>');
 
-});
+    });
 
 }

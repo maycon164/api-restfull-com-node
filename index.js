@@ -1,7 +1,10 @@
 const express = require('express');
 const consign = require('consign');
 
-let app = express();
+const app = express();
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 consign({
     verbose: true,
@@ -11,4 +14,3 @@ consign({
 app.listen(8080, '127.0.0.1', () => {
     console.log("SERVIDOR RODANDO.....")
 });
-
