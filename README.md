@@ -1,8 +1,14 @@
-# restfull
-basico de node js, um pouco de expresss
+<h1>Restfull</h1>
 
-Recursos
-  -express 
-  -consign
-  -nedb database
-  
+<p>
+  Um simples projeto para entender o básico de node js e um pouco de expresss e configuração de rotas.
+</p>
+
+> Recursos
+  <br>
+  <ol>
+    <li>Express</li>
+    <li>Consign</li>
+    <li>NeDB database</li>
+  </ol>
+     
