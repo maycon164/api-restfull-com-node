@@ -1,12 +1,11 @@
-const express = require('express');
-let routes = express.Router();
 
+module.exports = (app) => {
 
-routes.get('/', (req, res) => {
+app.get('/', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
-    res.end('<h1> Olá Como vai você? ...Ronaldo? </h1>');
+    res.end('<h1> OLA COMO VAI VOCE? ...Ronaldo? </h1>');
 
 });
 
-module.exports = routes;
+}

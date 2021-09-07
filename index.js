@@ -1,16 +1,14 @@
 const express = require('express');
-
-let routesIndex = require('./routes/index');
-let routesUsers = require('./routes/users');
+const consign = require('consign');
 
 let app = express();
 
-app.use(routesIndex);
-app.use('/users', routesUsers);
-
+consign({
+    verbose: true,
+    locale: 'pt-br'
+}).include('routes').into(app)
 
 app.listen(8080, '127.0.0.1', () => {
     console.log("SERVIDOR RODANDO.....")
 });
-
 
