@@ -6,11 +6,23 @@ let db = new NeDB({
 });
 
 module.exports = (app) => {
-        
-    app.get('/users', (req, res) => {
+    
+
+    app.get('/users',(req, res) => {
       
-        res.status(200).json(db.getAllData());
+        //res.status(200).json(db.getAllData());
         
+        db.find({}).sort(-1).exec((error, docs) => {
+            if(error){
+                app.utils.error.send(error, req, res);
+            }else{
+                res.status(200).json({
+                    docs
+                })
+            }
+
+        })
+
     });
 
     //buscaPeloNome
@@ -24,13 +36,10 @@ module.exports = (app) => {
             
             if(error) {
                 
-                res.status(400).json(error);
+                app.utils.error.send(error, req, res);
             }
-            
             else{
-
-                console.log(docs);
-                res.status(200).json(docs);
+               res.status(200).json(docs);
             } 
         })
 
@@ -44,10 +53,7 @@ module.exports = (app) => {
         db.insert(req.body, (error, doc) => {
             
             if(error){
-                console.log(`Error: ${error}`);
-                res.status(400).json({
-                    error
-                });
+                app.utils.error.send(error, req, res);
             }else{
                 res.status(200).json(doc);
             }
