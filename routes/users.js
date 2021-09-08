@@ -7,7 +7,7 @@ let db = new NeDB({
 
 module.exports = (app) => {
     
-
+    //Listar todos os users
     app.get('/users',(req, res) => {
       
         //res.status(200).json(db.getAllData());
@@ -61,8 +61,8 @@ module.exports = (app) => {
     });
 
     //Deletando um registro
-
     app.delete('/users/:id', (req, res) => {
+
         let id = req.params.id;
 
         //Remove apenas com o id
@@ -79,6 +79,33 @@ module.exports = (app) => {
         });
     })
 
+    //Atualizando um user
+    app.put('/users/:id', (req, res) => {
+        
+        let id = req.params.id;
+
+        db.findOne({_id : id}, (error, doc) => {
+           
+            if(error){
+            
+                app.utils.error.send(error, req, res);
+            
+            }else{
+            
+                let obj = Object.assign(doc, req.body);
+                delete obj._id;
+                console.log(obj);
+                db.update({_id : id}, obj, (error, numberUpdates) => {
+                    app.utils.error.send(error, req, res);
+                    res.status(200).end(`<p>${numberUpdates} itens alterados</p>`)
+                });  
+
+            }
+        });
+    
+    });
+
+    //USUARIOS -> admins?
     app.get('/users/admin', (req, res) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
