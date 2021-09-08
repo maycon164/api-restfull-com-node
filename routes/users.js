@@ -25,7 +25,7 @@ module.exports = (app) => {
 
     });
 
-    //buscaPeloNome
+    //buscaPeloNome ou pelo _id
     app.get('/users/:key', (req, res) => {
 
         //BUSCA pode ser pelo id do user ou pelo name;
@@ -46,7 +46,6 @@ module.exports = (app) => {
     });
 
     // inserindo registro
-
     app.post('/users', (req, res) => {
         
         db.insert(req.body, (error, doc) => {
@@ -60,6 +59,25 @@ module.exports = (app) => {
         })
         
     });
+
+    //Deletando um registro
+
+    app.delete('/users/:id', (req, res) => {
+        let id = req.params.id;
+
+        //Remove apenas com o id
+        db.remove({_id : id}, {multi : false}, (error, numRemoved) => {
+            
+            if(error){
+                
+                app.utils.error.send(error, req, res);
+
+            }else{
+                res.status(200).end(`<p> ${numRemoved} item foi removido <p>`);
+            }
+
+        });
+    })
 
     app.get('/users/admin', (req, res) => {
         res.statusCode = 200;
