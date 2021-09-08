@@ -1,5 +1,6 @@
 const NeDB = require('nedb');
 
+
 let db = new NeDB({
     filename : 'users.db',
     autoload : true
@@ -48,17 +49,23 @@ module.exports = (app) => {
     // inserindo registro
     app.post('/users', (req, res) => {
         
-        db.insert(req.body, (error, doc) => {
-            
-            if(error){
-                app.utils.error.send(error, req, res);
-            }else{
-                res.status(200).json(doc);
-            }
+        let validationErrors = app.validation.validator.validate(req.body);
 
-        })
-        
-    });
+        if(!validationErrors){
+
+            db.insert(req.body, (error, doc) => {
+            
+                if(error){
+                    app.utils.error.send(error, req, res);
+                }else{
+                    res.status(200).json(doc);
+                }
+    
+            });
+        }else{
+            app.utils.error.send(validationErrors, req, res);
+        }
+    })
 
     //Deletando um registro
     app.delete('/users/:id', (req, res) => {
@@ -83,7 +90,7 @@ module.exports = (app) => {
     app.put('/users/:id', (req, res) => {
         
         let id = req.params.id;
-
+        
         db.findOne({_id : id}, (error, doc) => {
            
             if(error){

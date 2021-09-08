@@ -9,7 +9,7 @@ app.use(express.json());
 consign({
     verbose: true,
     locale: 'pt-br'
-}).include('routes').include('utils').into(app)
+}).include('routes').include('utils').include('validation').into(app)
 
 app.listen(8080, '127.0.0.1', () => {
     console.log("SERVIDOR RODANDO.....")
